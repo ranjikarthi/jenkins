@@ -15,7 +15,7 @@ pipeline {
 
         stage('Run Tests Inside Docker') {
             steps {
-                bat '%DOCKER% run --rm python-app pytest'
+                bat '%DOCKER% run python-app pytest'
             }
         }
 
