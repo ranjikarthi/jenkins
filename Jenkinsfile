@@ -3,32 +3,19 @@ pipeline {
 
     stages {
 
-        stage('Check Python') {
-            steps {
-                bat 'where python'
-                bat 'python --version'
-            }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                bat 'pip install -r requirements.txt'
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                bat 'pytest'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 bat 'docker build -t python-app .'
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Run Tests Inside Docker') {
+            steps {
+                bat 'docker run --rm python-app pytest'
+            }
+        }
+
+        stage('Run Application') {
             steps {
                 bat 'docker run --rm python-app'
             }
