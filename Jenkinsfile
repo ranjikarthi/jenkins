@@ -3,39 +3,33 @@ pipeline {
 
     stages {
 
-        stage('Checkout Code') {
-            steps {
-                git 'https://github.com/ranjikarthi/jenkins.git'
-            }
-        }
-
         stage('Check Python') {
             steps {
-                sh 'python --version'
+                bat 'python --version'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                bat 'pip install -r requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'pytest'
+                bat 'pytest'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t python-app:1.0 .'
+                bat 'docker build -t python-app .'
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                sh 'docker run --rm python-app:1.0'
+                bat 'docker run --rm python-app'
             }
         }
     }
