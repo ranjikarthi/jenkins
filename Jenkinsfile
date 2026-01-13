@@ -5,7 +5,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/username/python-jenkins-docker.git'
+                git 'https://github.com/ranjikarthi/jenkins.git'
             }
         }
 
