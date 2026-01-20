@@ -5,15 +5,7 @@ pipeline {
         DOCKER = '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe"'
     }
 
-    pipeline {
-    agent any
-
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/ranjikarthi/jenkins1.git'
-            }
-        }
 
         stage('Check Python') {
             steps {
