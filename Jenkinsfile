@@ -5,23 +5,44 @@ pipeline {
         DOCKER = '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe"'
     }
 
+    pipeline {
+    agent any
+
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/ranjikarthi/jenkins1.git'
+            }
+        }
+
+        stage('Check Python') {
+            steps {
+                bat 'python --version'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                bat 'python -m pip install --upgrade pip'
+                bat 'python -m pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                bat 'python -m pytest'
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
-                bat '%DOCKER% build -t python-app .'
+                bat 'docker build -t python-app .'
             }
         }
 
-        stage('Run Tests Inside Docker') {
+        stage('Run Docker Container') {
             steps {
-                bat '%DOCKER% run python-app pytest'
-            }
-        }
-
-        stage('Run Application') {
-            steps {
-                bat '%DOCKER% run --rm python-app'
+                bat 'docker run --rm python-app'
             }
         }
     }
